@@ -1307,7 +1307,10 @@ ngx_http_push_stream_ping_timer_wake_handler(ngx_event_t *ev)
         ngx_http_push_stream_send_response_finalize(r);
     } else {
         ngx_http_push_stream_timer_reset(pslcf->ping_message_interval, ctx->ping_timer);
-        ngx_http_push_stream_timer_reset(pslcf->subscriber_connection_ttl, ctx->disconnect_timer);
+
+        if (ctx->disconnect_timer != NULL) {
+            ngx_http_push_stream_timer_reset(pslcf->subscriber_connection_ttl, ctx->disconnect_timer);
+        }
     }
 }
 
